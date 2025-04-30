@@ -33,20 +33,27 @@ export async function POST(req: Request) {
       return new Response("No job ID found", { status: 400 });
     }
 
-    const user = await prisma.user.findUnique({
+    const company = await prisma.user.findUnique({
       where: {
-        stripeCustomerId: customerId,
+        stripeCustomerId: customerId as string,
       },
+      select:{
+        Company:{
+          select:{
+            id: true
+          }
+        }
+      }
     });
 
-    if (!user) throw new Error("User not found...");
+    if (!company) throw new Error("Company not found...");
 
     // Update the job post status to PUBLISHED
     await prisma.jobPost.update({
       where: {
         id: jobId,
-        // @ts-ignore
-        userId: user.id, // Ensure the job belongs to the user
+        // userId: user.id, // Ensure the job belongs to the user
+        companyId: company?.Company?.id as string
       },
       data: {
         status: "ACTIVE",
