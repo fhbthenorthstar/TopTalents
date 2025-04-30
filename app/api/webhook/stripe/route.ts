@@ -33,6 +33,8 @@ export async function POST(req: Request) {
       return new Response("No job ID found", { status: 400 });
     }
 
+    console.log(customerId)
+
     const company = await prisma.user.findUnique({
       where: {
         stripeCustomerId: customerId as string,
@@ -47,6 +49,9 @@ export async function POST(req: Request) {
     });
 
     if (!company) throw new Error("Company not found...");
+
+
+    console.log(company)
 
     // Update the job post status to PUBLISHED
     await prisma.jobPost.update({
