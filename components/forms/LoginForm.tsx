@@ -67,7 +67,7 @@ export function LoginForm() {
         <CardContent>
           <div className="grid gap-6">
             <div className="flex flex-col gap-4">
-              <form
+              {/* <form
                 action={async () => {
                   "use server";
                   await signIn("github", {
@@ -81,7 +81,7 @@ export function LoginForm() {
                   variant="outline"
                   width="w-full"
                 />
-              </form>
+              </form> */}
               <form
                 action={async () => {
                   "use server";
